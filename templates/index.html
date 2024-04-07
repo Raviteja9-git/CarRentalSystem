@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Car Rental Management System</title>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+  </head>
+  <body>
+    <div class="container mt-5">
+      <h2>Car Rental Management System</h2>
+      <hr />
+      <!-- Rent Car Form -->
+      <form action="{{ url_for('rent_car') }}" method="POST">
+        <h4>Rent a Car</h4>
+        <div class="form-group">
+          <label for="vehicleId">Select Car:</label>
+          <select class="form-control" id="vehicleId" name="vehicleId">
+            {% for car in cars %}
+            <option value="{{ car[0] }}">
+              {{ car[1] }} - {{ car[2] }} ({{ car[3] }})
+            </option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="pickupDate">Pickup Date:</label>
+          <input
+            type="date"
+            class="form-control"
+            id="pickupDate"
+            name="pickupDate"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="returnDate">Return Date:</label>
+          <input
+            type="date"
+            class="form-control"
+            id="returnDate"
+            name="returnDate"
+            required
+          />
+        </div>
+        <h5>Customer Information</h5>
+        <div class="form-group">
+          <label for="firstName">First Name:</label>
+          <input
+            type="text"
+            class="form-control"
+            id="firstName"
+            name="firstName"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="lastName">Last Name:</label>
+          <input
+            type="text"
+            class="form-control"
+            id="lastName"
+            name="lastName"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="email">Email:</label>
+          <input
+            type="email"
+            class="form-control"
+            id="email"
+            name="email"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="phoneNumber">Phone Number:</label>
+          <input
+            type="tel"
+            class="form-control"
+            id="phoneNumber"
+            name="phoneNumber"
+            required
+          />
+        </div>
+        <button type="submit" class="btn btn-primary">Rent Car</button>
+      </form>
+      <br />
+      <br />
+      <h4>Navigation</h4>
+      <a href="/view-tables">View Tables</a>
+    </div>
+  </body>
+</html>

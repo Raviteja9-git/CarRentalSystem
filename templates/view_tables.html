@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>View Tables</title>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+  </head>
+  <body>
+    <div class="container mt-5">
+      <h2>View Tables</h2>
+      <hr />
+      <form action="/view-tables" method="POST">
+        <div class="form-group">
+          <label for="tableName">Select Table:</label>
+          <select class="form-control" id="tableName" name="table">
+            <option value="Vehicles">Vehicles</option>
+            <option value="Customers">Customers</option>
+            <option value="Bookings">Bookings</option>
+            <option value="Administrators">Administrators</option>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Fetch Data</button>
+      </form>
+
+      <hr />
+      <h4>Join Vehicles and Bookings</h4>
+      <form action="/view-joined-table" method="POST">
+        <button type="submit" class="btn btn-primary">
+          View Vehicles and Bookings Join
+        </button>
+      </form>
+
+      <!-- Table Display Section -->
+      {% if table_data %}
+      <hr />
+      <h4>Table Data</h4>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            {% for column in table_columns %}
+            <th>{{ column }}</th>
+            {% endfor %}
+          </tr>
+        </thead>
+        <tbody>
+          {% for row in table_data %}
+          <tr>
+            {% for column in row %}
+            <td>{{ column }}</td>
+            {% endfor %}
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      {% endif %}
+
+      <!-- Error Message Display -->
+      {% if error_message %}
+      <div class="alert alert-danger mt-3" role="alert">
+        {{ error_message }}
+      </div>
+      {% endif %} <br />
+      <br />
+      <h4>Navigation</h4>
+      <a href="/">Go to Car Rental Management System</a>
+    </div>
+  </body>
+</html>
