@@ -5,6 +5,20 @@ import mysql.connector
 from datetime import datetime, timedelta
 
 
+
+# Initialize Flask application
+app = Flask(__name__)
+
+# Initialize MySQL connection with configuration
+mysql_conn = mysql.connector.connect(
+    host="localhost",  # Replace with your MySQL host
+    user="root",  # Replace with your MySQL username
+    password="1234",  # Replace with your MySQL password
+    database="car_rental",  # Replace with your MySQL database name
+)
+
+# Create cursor
+cursor = mysql_conn.cursor()
 # Function to create tables if not present
 def create_tables(cursor):
     # Dictionary of table names and their corresponding create table queries
@@ -89,20 +103,6 @@ def insert_initial_data(cursor):
         cursor.execute(insert_query, car)
 
 
-# Initialize Flask application
-app = Flask(__name__)
-
-# Initialize MySQL connection with configuration
-mysql_conn = mysql.connector.connect(
-    host="localhost",  # Replace with your MySQL host
-    user="root",  # Replace with your MySQL username
-    password="yogesh14",  # Replace with your MySQL password
-    database="car_rental_db",  # Replace with your MySQL database name
-)
-
-# Create cursor
-cursor = mysql_conn.cursor()
-
 # Check and create tables if not present
 create_tables(cursor)
 
@@ -145,6 +145,10 @@ def home():
 
 @app.route("/view-joined-table", methods=["POST"])
 def view_joined_table():
+    mysql_conn = mysql.connector.connect(
+            host="localhost", user="root", password="1234", database="car_rental"
+        )
+    cursor = mysql_conn.cursor()
     try:
         # Perform the join between Vehicles and Bookings tables
         cursor.execute(
@@ -168,6 +172,10 @@ def view_joined_table():
 @app.route("/view-tables", methods=["GET", "POST"])
 def view_tables():
     if request.method == "POST":
+        mysql_conn = mysql.connector.connect(
+            host="localhost", user="root", password="1234", database="car_rental"
+        )
+        cursor = mysql_conn.cursor()
         table_name = request.form.get("table")
         try:
             if table_name == "Vehicles":
@@ -209,7 +217,7 @@ def rent_car():
 
         # Connect to MySQL
         mysql_conn = mysql.connector.connect(
-            host="localhost", user="root", password="yogesh14", database="car_rental_db"
+            host="localhost", user="root", password="1234", database="car_rental"
         )
         cursor = mysql_conn.cursor()
 
@@ -255,11 +263,6 @@ def rent_car():
 
     except mysql.connector.Error as error:
         return render_template("error.html", message="Error renting car.")
-
-    finally:
-        # Close cursor and connection
-        cursor.close()
-        mysql_conn.close()
 
 
 # Rent success route
